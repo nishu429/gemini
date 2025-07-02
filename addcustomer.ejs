@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Add v1 -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/addcustomer" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-1">
+                                        <label for="image" class="form-label">Image</label>
+                                        <img
+                                          id="imagePreview"
+                                          src=""
+                                          alt="Selected Image"
+                                          style="display: none; max-width: 100px; margin-bottom: 10px;"
+                                        />
+                                        <input
+                                          type="file"
+                                          class="form-control"
+                                          id="image"
+                                          name="image"
+                                          aria-describedby="image"
+                                          tabindex="5"
+                                          accept="image/*"
+                                        />
+                                        <div class="invalid-feedback">This field is required</div>
+                                      </div>
+                                      
+                                      
+                                    <div class="mb-1">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" value="" aria-describedby="name" tabindex="1" autofocus />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+    
+                                    <div class="mb-1">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="" aria-describedby="email" tabindex="2" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+    
+                                    <div class="mb-1">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" value="" aria-describedby="address" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+    
+                                    <div class="mb-1">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <div class="row g-2">
+                                            <div class="col-2">
+                                                <select class="form-select" id="country_code" name="country_code" tabindex="3">
+                                                    <option value="+1" selected>+1 (USA)</option>
+                                                    <option value="+44">+44 (UK)</option>
+                                                    <option value="+91">+91 (India)</option>
+                                                    <option value="+61">+61 (Australia)</option>
+                                                    <option value="+81">+81 (Japan)</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-10">
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="phone_number" 
+                                                    name="phone_number" 
+                                                    value="" 
+                                                    aria-describedby="Phone" 
+                                                    tabindex="4" 
+                                                    placeholder="Enter phone number" 
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    
+
+                                  
+
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Add</button>
+                                        <a href="/customerlist" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Add v1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            // Form validation on submit
+            $('form').on('submit', function(event) {
+                var nameInput = $('#name');
+                var emailInput = $('#email');
+                var addressInput = $('#address');
+                var phoneInput = $('#phone_number');
+                var imageInput = $('#image');
+
+                var valid = true;
+
+                // Check name
+                if (nameInput.val().trim() === '') {
+                    nameInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    nameInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check email
+                if (emailInput.val().trim() === '' || !validateEmail(emailInput.val())) {
+                    emailInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    emailInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check address
+                if (addressInput.val().trim() === '') {
+                    addressInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    addressInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check phone number
+                if (phoneInput.val().trim() === '' || !validatePhoneNumber(phoneInput.val())) {
+                    phoneInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    phoneInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check image
+                if (!imageInput.val()) {
+                    imageInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    imageInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!valid) {
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+
+            // Helper function to validate email
+            function validateEmail(email) {
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Helper function to validate phone number
+            function validatePhoneNumber(phone) {
+                var phoneRegex = /^[0-9]{10}$/;
+                return phoneRegex.test(phone);
+            }
+        });
+    </script>
+    <script>
+        document.getElementById('image').addEventListener('change', function (event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('imagePreview');
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = '';
+    preview.style.display = 'none';
+  }
+});
+
+    </script>
+        <script>
+            $(window).on('load', function() {
+                if (feather) {
+                    feather.replace({
+                        width: 14,
+                        height: 14
+                    });
+                }
+            });
+        </script>
+    
+</body>
+<!-- END: Body-->
+</html>

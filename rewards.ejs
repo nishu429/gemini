@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <!-- Bootstrap CSS (Add this if not included) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- BEGIN: Head-->
+    <%- include('../common/header.ejs'); %>
+    <!-- END: Head-->
+
+    <style>
+        .card-datatable {
+            padding: 20px; 
+        }
+    </style>
+</head>
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+ 
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <!-- users list start -->
+                <section class="app-user-list">
+                    <div class="card justify-content-end">
+                        <!-- Add your "Create New Reward" button here -->
+                        <div class="card-header d-flex justify-content-end align-items-center">
+                            <!-- <a href="/addreward" class="btn btn-warning">Add</a> -->
+                        </div>
+
+                        <div class="card-datatable table-responsive pt-0">
+                            <table id="myTable" class="user-list-table table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Sr.no</th>
+                                        <th>Amount</th>
+                                        <th>Points</th>              
+                                         <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% data.forEach((item, i) => { %>
+                                    <tr data-id="<%= item.id %>">
+                                        <td><%= i + 1 %></td>
+                                        <td>$<%= item.amount %></td>
+                                        <td><%= item.points %></td>
+                                        <td>
+                                            <a href="/rewardedit/<%= item.id %>" class="btn btn-warning data-bs-toggle=" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <i class="me-80" data-feather="edit"></i>
+                                            </a>
+                                            <!-- <a href="/rewardview/<%= item.id %>" class="btn btn-warning data-bs-toggle=" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="me-80" data-feather="eye"></i></a> -->
+                                            <a href="#" onclick="deleteUser('<%= item.id %>', event)" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete "><i class="me-80" data-feather="trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Your updated script here -->
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+            
+        });
+
+        // $(document).ready(function() {
+        //     $('#myTable').DataTable();
+
+        //     // Event delegation for status toggle button
+        // });
+
+        function deleteUser(user_id, event) {
+            event.preventDefault(); // Prevent the default action of the link
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-warning",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/deletereward/${user_id}`,
+                        data: {
+                            id: user_id
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                swalWithBootstrapButtons.fire(
+                                    "Deleted!",
+                                    "Reward has been deleted.",
+                                    "success"
+                                ).then(() => {
+                                    location.reload(); // Reload the page after deletion
+                                });
+                            } else {
+                                swalWithBootstrapButtons.fire(
+                                    "Failed!",
+                                    "Your reward could not be deleted.",
+                                    "error"
+                                );
+                            }
+                        },
+                        error: function() {
+                            swalWithBootstrapButtons.fire(
+                                "Error!",
+                                "An error occurred while deleting the reward.",
+                                "error"
+                            );
+                        }
+                    });
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        "Cancelled",
+                        "Reward is safe :)",
+                        "error"
+                    );
+                }
+            });
+        }
+    </script>
+</body>
+</html>

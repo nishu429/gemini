@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Edit Form -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/createreward" method="POST">
+                                    <!-- Editable Amount -->
+                                    <div class="mb-1">
+                                        <label for="amount" class="form-label">Bill Amount</label>
+                                        <input type="number" class="form-control" id="amount" name="amount"
+                                            aria-describedby="amount" tabindex="1" autofocus />
+                                            <div class="invalid-feedback">
+                                                This field is required
+                                            </div>
+                                    </div>
+                                    
+                                    <!-- Editable Points -->
+                                    <div class="mb-1">
+                                        <label for="points" class="form-label">Reward Points</label>
+                                        <input type="number" class="form-control" id="points" name="points"
+                                            aria-describedby="points" tabindex="2"  />
+                                            <div class="invalid-feedback">
+                                                This field is required
+                                            </div>
+                                    </div>
+                                  
+                                    <!-- Submit Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <!-- <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Add</button> -->
+                                        <a href="/rewards" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Edit Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        // Form validation on submit
+        $('form').on('submit', function(event) {
+            var isValid = true;
+            
+            // Validate amount
+            var amountInput = $('#amount');
+            if (amountInput.val().trim() === '') {
+                amountInput.removeClass('is-valid').addClass('is-invalid');
+                isValid = false;
+            } else {
+                amountInput.removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Validate points
+            var pointsInput = $('#points');
+            if (pointsInput.val().trim() === '') {
+                pointsInput.removeClass('is-valid').addClass('is-invalid');
+                isValid = false;
+            } else {
+                pointsInput.removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Prevent form submission if any field is invalid
+            if (!isValid) {
+                event.preventDefault(); 
+            }
+        });
+
+        // Automatically remove error styling when user starts typing
+        $('#amount').on('input', function() {
+            $(this).removeClass('is-invalid').addClass('is-valid');
+        });
+
+        $('#points').on('input', function() {
+            $(this).removeClass('is-invalid').addClass('is-valid');
+        });
+    });
+</script>
+
+</body>
+<!-- END: Body-->
+</html>

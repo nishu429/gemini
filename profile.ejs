@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <!-- BEGIN: Head-->
+    <%- include('../common/header.ejs'); %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- END: Head-->
+</head>
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static">
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+                <div class="auth-wrapper">
+                    <div class="auth-inner py-2">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <form class="auth-register-form" action="/profileupdate" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-4 d-flex flex-column align-items-center">
+                                            <div class="image-container position-relative" style="width: 330px; height: 280px;">
+                                                <img src="<%= profile.image %>" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                                                <!-- Pencil icon overlay -->
+                                                <div class="icon-overlay position-absolute d-flex align-items-center justify-content-center" style="bottom: 10px; right: 10px; cursor: pointer;">
+                                                    <i class="fas fa-pencil-alt" style="font-size: 24px; color: rgb(241, 240, 245); background: rgba(6, 6, 6, 0.5); padding: 8px; border-radius: 50%;"></i>
+                                                </div>
+                                                <input type="file" id="image" name="image" accept="image/*" style="display: none;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-1">
+                                                <label for="register-first-name" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" value="<%= profile.name %>" >
+                                                <div class="invalid-feedback"> This field is required</div>
+                                            </div>
+                                            <div class="mb-1">
+                                                <label for="register-email" class="form-label">Email</label>
+                                                <input type="email" readonly disabled class="form-control" id="email" value="<%= profile.email %>" name="email" >
+                                                
+                                            </div>
+                                            <div class="mb-1">
+                                                <label for="register-phone-number" class="form-label">Phone Number</label>
+                                                <input type="text" class="form-control" value="<%= profile.phone_number %>" id="phone_number" readonly disabled name="phone_number" >
+                                                
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="submit" class="btn btn-warning">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <%- include('../common/footer.ejs'); %>
+
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <script>
+        document.querySelector('.icon-overlay').addEventListener('click', function() {
+            document.getElementById('image').click();
+        });
+    </script>
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+   <script>
+    $(document).ready(function () {
+    $('form').on('submit', function (event) {
+        var isValid = true;
+
+        // Validate name (should not be empty and match valid patterns)
+        var nameInput = $('#name');
+        var nameValue = nameInput.val().trim();
+
+        if (nameValue === '') {
+            nameInput.removeClass('is-valid').addClass('is-invalid');
+            nameInput.next('.invalid-feedback').text('Name is required.');
+            isValid = false;
+        } else if (!/^[a-zA-Z\s]+$/.test(nameValue)) {
+            nameInput.removeClass('is-valid').addClass('is-invalid');
+            nameInput.next('.invalid-feedback').text('Name can only contain letters and spaces.');
+            isValid = false;
+        } else {
+            nameInput.removeClass('is-invalid').addClass('is-valid');
+        }
+
+        // Prevent form submission if any field is invalid
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+
+    // Automatically remove error styling when user starts typing
+    $('#name').on('input', function () {
+        $(this).removeClass('is-invalid').addClass('is-valid');
+    });
+});
+
+   </script>
+</body>
+</html>

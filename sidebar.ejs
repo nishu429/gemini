@@ -1,0 +1,94 @@
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow " id='sidebar-menu' data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item me-auto"><a class="navbar-brand" href="#"><span class="brand-logo">
+                       <img src="./../app-assets/images/favicon.png" alt="">
+                    </span>
+                    <h2 class="brand-text ">Gemini</h2>
+                </a></li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+        </ul>
+    </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item <%= ['Dashboard'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/dashboard">
+                    <i data-feather="home"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item <%= ['Customers', 'Customer Detail', 'Edit Customer', 'Add Customer'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/customerlist">
+                    <i data-feather="users"></i>
+                    <span class="menu-title text-truncate" data-i18n="user">Customers</span>
+                </a>
+            </li>
+            
+            <li class="nav-item <%= ['Carrier', 'Carrier Detail', 'Edit Carrier', 'Add Carrier'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/carrierlist">
+                    <i data-feather="truck"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Carrier</span>
+                </a>
+            </li>
+            <li class="nav-item <%= ['Packges','Package Detail','Add Package','Edit Package'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/packagelist">
+                    <i data-feather="package"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Log Package In</span>
+                </a>
+            </li>
+            <li class="nav-item <%= ['Rewards','Reward Detail','Add Reward','Edit Reward'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/rewards">
+                    <i data-feather="gift"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Rewards</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item <%= ['Transaction','Transaction Detail','Add Transaction','Edit Rewar'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/transactionlist">
+                    <i data-feather="book"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Transactions</span>
+                </a>
+            </li> -->
+            <li class="nav-item <%= ['RedeemPoint', 'Add RedeemPoint', 'Edit Reward'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/redeempointlist">
+                    <i data-feather="dollar-sign"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Redeem Points</span>
+                </a>
+            </li>
+            
+            <!-- <li class="nav-item <%= ['Rewards'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/chat">
+                    <i data-feather="gift"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Chat</span>
+                </a>
+            </li> -->
+            <li class="nav-item <%= ['Contacts','Contact Detail','Add Contact','Edit Contact'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/contacts">
+                    <i data-feather="phone"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Contacts</span>
+                </a>
+            </li>
+           
+            <li class="nav-item <%= ['Privacy Policy'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/privacy">
+                    <i data-feather="lock"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Privacy Policy</span>
+                </a>
+            </li>
+            <li class="nav-item <%= ['About Us'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/aboutus">
+                    <i data-feather="info"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">About Us</span>
+                </a>
+            </li>
+            <li class="nav-item <%= ['Terms&Conditions'].includes(title) ? 'active' : '' %>">
+                <a class="d-flex align-items-center" href="/term">
+                    <i data-feather="file-text"></i>
+                    <span class="menu-title text-truncate" data-i18n="carrier">Terms&Conditions</span>
+                </a>
+            </li>
+           
+        </ul>
+    </div>
+   
+</div>

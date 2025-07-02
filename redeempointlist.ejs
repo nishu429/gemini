@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <!-- Head Include -->
+  <%- include('../common/header.ejs'); %>
+  <style>
+    .card-datatable {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static">
+  
+  <%- include('../common/navbar.ejs'); %>
+  <%- include('../common/sidebar.ejs'); %>
+
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+      <div class="content-body">
+        <section class="app-user-list">
+          <div class="card justify-content-end">
+            <div class="card-header d-flex justify-content-end align-items-center">
+              <!-- Button placeholder -->
+            </div>
+            <div class="card-datatable table-responsive pt-0">
+              <table id="myTable" class="user-list-table table">
+                <thead class="table-light">
+                  <tr>
+                    <th>Sr.no</th>
+                    <th>User Name</th>
+                    <th>Amount</th>
+                    <th>Redeem Point</th>
+                    <th>Discount</th>
+                    <th>Final Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% data.forEach((item, i) => { %>
+                  <tr data-id="<%= item.id %>">
+                    <td><%= i + 1 %></td>
+                    <td><%= item.dataValues?.user?.name || 'N/A' %></td>
+                    <td>$<%= item.amount || '0.00' %></td>
+                    <td><%= item.redeem_points || '0' %></td>
+                    <td>$<%= item.discount || '0.00' %></td>
+                    <td>$<%= item.sub_total || '0.00' %></td>
+                    <td>
+                      <% if (item.status === 1) { %>
+                        <button class="btn btn-success" disabled>Success</button>
+                      <% } else { %>
+                        <button class="btn btn-warning" onclick="updatestatus('<%= item.id %>', 1)">Pending</button>
+                      <% } %>
+                    </td>
+                    <td>
+                      <a href="/redeempointview/<%= item.id %>" class="btn btn-warning" data-bs-toggle="tooltip" title="View">
+                        <i class="me-80" data-feather="eye"></i>
+                      </a>
+                      <a href="#" onclick="deleteUser('<%= item.id %>', event)" class="btn btn-danger" data-bs-toggle="tooltip" title="Delete">
+                        <i class="me-80" data-feather="trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../common/footer.ejs'); %>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    $(window).on('load', function() {
+      if (feather) {
+        feather.replace({ width: 14, height: 14 });
+      }
+    });
+
+    function deleteUser(user_id, event) {
+      event.preventDefault();
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post(`/deletepoint/${user_id}`, { id: user_id }, function(response) {
+            if (response.success) {
+              Swal.fire("Deleted!", "Reward has been deleted.", "success").then(() => location.reload());
+            } else {
+              Swal.fire("Failed!", "Could not delete reward.", "error");
+            }
+          }).fail(() => Swal.fire("Error!", "An error occurred.", "error"));
+        }
+      });
+    }
+
+    function updatestatus(id, status) {
+      $.post("/statusupdate_transaction", { id, status }, function(res) {
+        if (res) window.location.reload();
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Edit Form -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/updateredeempoint/<%= data.id %>" method="POST" id="transactionForm">
+                                    <!-- Editable Amount -->
+                                    <div class="mb-1">
+                                        <label for="amount" class="form-label">Amount</label>
+                                        <input type="number" class="form-control" id="amount_limit" name="amount_limit"
+                                         value="<%= data.amount_limit%>"
+                                            aria-describedby="amount" tabindex="1" autofocus />
+                                            <div class="invalid-feedback">
+                                               
+                                            </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <label for="amount" class="form-label">Redeem Point</label>
+                                        <input type="number" class="form-control" id="redeem_points" name="redeem_points"
+                                         value="<%= data.redeem_points%>"
+                                            aria-describedby="amount" tabindex="1" autofocus />
+                                            <div class="invalid-feedback">
+                                               
+                                            </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="amount" class="form-label">Discount</label>
+                                        <input type="number" class="form-control" id="discount" name="discount"
+                                         value="<%= data.discount%>"
+                                            aria-describedby="amount" tabindex="1" autofocus />
+                                            <div class="invalid-feedback">
+                                              
+                                            </div>
+                                    </div>
+                                    <!-- Editable Points -->
+                                   
+                                  
+                                  
+                                    <!-- Submit Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Update</button>
+                                        <a href="/redeempointlist" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Edit Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+    <!-- END: Page JS-->
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        console.log('Document ready, initializing validation...');
+        
+        $('#transactionForm').validate({
+            rules: {
+                amount_limit: {
+                    required: true,
+                    number: true
+                },
+                redeem_points: {
+                    required: true,
+                    number: true
+                },
+                discount: {
+                    required: true,
+                    number: true
+                },
+            },
+            messages: {
+                amount_limit: {
+                    required: "Please enter the Amount",
+                    number: "Please enter a valid number"
+                },
+                redeem_points: {
+                    required: "Please enter the Point",
+                    number: "Please enter a valid number"
+                },
+                discount: {
+                    required: "Please enter the Discount",
+                    number: "Please enter a valid number"
+                },
+            },
+            errorElement: 'div',
+            errorClass: 'invalid-feedback',
+            highlight: function(element) {
+                $(element).addClass('is-invalid').removeClass('is-valid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+    });
+</script>
+
+
+</body>
+<!-- END: Body-->
+</html>

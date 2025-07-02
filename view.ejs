@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Register v1 -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form " action="" method="POST">
+                                    <div class="mb-1 mx-auto" style="width: 200px; height: 200px; position: relative; border-radius: 10px; object-fit: cover;">
+                                        <div class="border" style="width: 100%; height: 100%; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">
+                                            <% if (Array.isArray(view.img) && view.img.length > 0) { %>
+                                                <img src="../<%- view.img[0].image %>" alt="Customer image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+                                            <% } else { %>
+                                                <img src="../<%- view.image %>" alt="Customer image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+                                            <% } %>
+                                        </div>
+                                        
+                                        
+                                        <% if (Array.isArray(view.img) && view.img.length > 1) { %>
+                                            <div id="slider" style="display: flex; width: 100%; overflow-x: auto; position: absolute; bottom: 2px; left: 0; height: 70px; padding: 5px; border-radius: 5px;">
+                                                <% view.img.slice(1).forEach(function(student) { %>
+                                                    <img src="../<%- student.image %>" alt="additional image" width="70" height="70" style="flex-shrink: 0; margin-right: 5px; border-radius: 5px;">
+                                                <% }); %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                    
+                                    
+                                    <div class="mb-1">
+                                        <label for="first_name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name"
+                                            name="first_name" readonly value="<%= view.name%>"
+                                            aria-describedby="first_name" tabindex="1" autofocus />
+                                    </div>
+    
+                                    <div class="mb-1">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="email"
+                                            name="email" readonly value="<%= view.email %>"
+                                            aria-describedby="email" tabindex="2" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address"
+                                            name="address" readonly value="<%= view.address %>"
+                                            aria-describedby="address" tabindex="3" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" id="phone_number"
+                                            name="phone" readonly value="<%= view.country_code %>-<%= view.phone_number %>"
+                                            aria-describedby="Phone" tabindex="4" />
+                                    </div>
+                                   
+                                     <div class="d-flex justify-content-end">
+                                         <a href="/customerlist" class="btn btn-warning" tabindex="6">Back</a>
+                                     </div>   
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Register v1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+</body>
+<!-- END: Body-->
+</html>

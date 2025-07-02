@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Add v1 -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/editpackage/<%=data.id%>" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-1">
+                                        <label for="images" class="form-label">Images</label>
+                                        
+                                        <!-- Container for image previews -->
+                                        <div id="imagePreviews" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                          <!-- Image previews will be dynamically added here -->
+                                          <% if (images && images.length > 0) { %>
+                                            <% images.forEach(function(image) { %>
+                                              <img src="<%=image.image %>" style="max-width: 100px; margin-bottom: 10px;" alt="Image preview" />
+                                            <% }); %>
+                                          <% } %>
+                                        </div>
+                                      
+                                        <!-- File input field allowing multiple images -->
+                                        <input
+                                          type="file"
+                                          class="form-control"
+                                          id="image"
+                                          name="image"
+                                          aria-describedby="images"
+                                          tabindex="5"
+                                          accept="image/*"
+                                          multiple
+                                          onchange="previewImages(event)"
+                                          
+                                        />
+                                        
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="user_id" class="form-label">Receipt Name</label>
+                                        <select class="form-control" name="user_id" id="user_id">
+                                         
+                                            <% if (customerlist.length > 0) { %>
+                                                <% customerlist.forEach(function(customer) { %>
+                                                    <option value="<%= customer.id %>" <%= customer.id == data.user_id ? 'selected' : '' %> ><%= customer.name %></option>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <option value="">No customers available</option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="tracking_number" class="form-label">Tracking Number</label>
+                                        <input type="tracking_number" class="form-control" id="tracking_number" name="tracking_number" value="<%= data.tracking_number %>" aria-describedby="tracking_number" tabindex="2" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="user_id" class="form-label">Carrier</label>
+                                        <select class="form-control" name="carrier_id" id="carrier_id">
+                                          
+                                            <% if (carrier.length > 0) { %>
+                                                <% carrier.forEach(function(customer) { %>
+                                                    <option value="<%= customer.id %>"  <%= customer.id == data.carrier_id ? 'selected' : '' %>><%= customer.name %></option>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <option value="">No customers available</option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="sender" class="form-label">Sender</label>
+                                        <input type="text" class="form-control" id="sender" name="sender" value="<%= data.sender %>" aria-describedby="sender" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="Weight" class="form-label">Weight</label>
+                                        <input type="text" class="form-control" id="Weight" name="weight" value="<%= data.weight %>" aria-describedby="Weight" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="self_location" class="form-label">Shelf_Location</label>
+                                        <input type="text" class="form-control" id="self_location" name="self_location" value="<%= data.self_location %>" aria-describedby="self_location" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="message" class="form-label">Message</label>
+                                        <input type="date" class="form-control" id="message" name="message" value="<%= data.message %>" aria-describedby="message" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Update</button>
+                                        <a href="/packagelist" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Add v1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+  <script>$(document).ready(function () {
+    $('form').on('submit', function (event) {
+        let isValid = true;
+
+        // Helper function to validate fields
+        function validateField(selector, condition) {
+            const field = $(selector);
+            if (condition) {
+                field.removeClass('is-invalid').addClass('is-valid');
+            } else {
+                field.removeClass('is-valid').addClass('is-invalid');
+                isValid = false;
+            }
+        }
+
+        // Validate tracking number (must not be empty)
+        validateField('#tracking_number', $('#tracking_number').val().trim() !== '');
+
+        // Validate sender (must not be empty)
+        validateField('#sender', $('#sender').val().trim() !== '');
+
+        // Validate weight (must be a positive number)
+       
+
+        // Validate shelf location (must not be empty)
+        validateField('#self_location', $('#self_location').val().trim() !== '');
+
+        // Validate message (must not be empty)
+        validateField('#message', $('#message').val().trim() !== '');
+
+        // Validate images (ensure at least one image is selected)
+        const imageFiles = $('#image')[0].files;
+        validateField('#image', imageFiles.length > 0);
+
+        // Prevent form submission if any validation fails
+       
+    });
+
+    // Preview Images
+    $('#image').on('change', function (event) {
+        const files = event.target.files;
+        const previewsContainer = document.getElementById('imagePreviews');
+        previewsContainer.innerHTML = '';
+
+        Array.from(files).forEach((file) => {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.alt = 'Selected Image';
+                imgElement.style = 'max-width: 100px; margin-bottom: 10px;';
+                previewsContainer.appendChild(imgElement);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+});
+</script>
+        <script>
+            $(window).on('load', function() {
+                if (feather) {
+                    feather.replace({
+                        width: 14,
+                        height: 14
+                    });
+                }
+            });
+        </script>
+    
+</body>
+<!-- END: Body-->
+</html>

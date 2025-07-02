@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+    <!-- BEGIN: Head-->
+    <%- include('./common/header.ejs'); %>
+    <!-- END: Head-->
+</head>
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('./common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('./common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0 ">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- Dashboard Ecommerce Starts -->
+                <!-- Statistics Card -->
+                <div class="col-12">
+                    <div class="card card-statistics">
+                       
+                        <div class="card-body statistics-body">
+                            <div class="row">
+                                <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                                    <a href="/customerlist" class="card_custom">
+                                        <div class="d-flex flex-row">
+                                            <div class="avatar bg-light-primary me-2">
+                                                <div class="avatar-content">
+                                                    <i data-feather="users" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="my-auto">
+                                                <h4 class="fw-bolder mb-0"><%= users %></h4>
+                                                <h2 class="card-text font-small-3 mb-0">Customers</h2>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                                 <a href="/carrierlist" class="card_custom">
+                                    <div class="d-flex flex-row">
+                                        <div class="avatar bg-light-info me-2">
+                                            <div class="avatar-content">
+                                                <i data-feather="truck" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="my-auto">
+                                            <h4 class="fw-bolder mb-0"><%= carrier%></h4>
+                                            <h2 class="card-text font-small-3 mb-0">Carrier</h2>
+                                        </div>
+                                    </div>
+                                 </a>
+                                </div>
+                                <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                    <a href="/packagelist" class="card_custom">
+                                       <div class="d-flex flex-row">
+                                           <div class="avatar bg-light-danger me-2">
+                                               <div class="avatar-content">
+                                                   <i data-feather="package" class="avatar-icon"></i>
+                                               </div>
+                                           </div>
+                                           <div class="my-auto">
+                                               <h4 class="fw-bolder mb-0"><%=package%></h4>
+                                               <h2 class="card-text font-small-3 mb-0">Packages</h2>
+                                           </div>
+                                       </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                 <a href="/rewards" class="card_custom">
+                                    <div class="d-flex flex-row">
+                                        <div class="avatar bg-light-danger me-2">
+                                            <div class="avatar-content">
+                                                <i data-feather="gift" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="my-auto">
+                                            <h4 class="fw-bolder mb-0"><%=reward%></h4>
+                                            <h2 class="card-text font-small-3 mb-0">Rewards</h2>
+                                        </div>
+                                    </div>
+                                 </a>
+                                </div>
+                                
+
+                                
+                            </div>
+                            <div class="row mt-2" >
+                                <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                    <a href="/contacts" class="card_custom">
+                                       <div class="d-flex flex-row">
+                                           <div class="avatar bg-light-danger me-2">
+                                               <div class="avatar-content">
+                                                   <i data-feather="phone" class="avatar-icon"></i>
+                                               </div>
+                                           </div>
+                                           <div class="my-auto">
+                                               <h4 class="fw-bolder mb-0"><%=contact%></h4>
+                                               <h2 class="card-text font-small-3 mb-0">Contacts</h2>
+                                           </div>
+                                       </div>
+                                    </a>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Statistics Card -->
+
+                <!-- Chart Section -->
+                <div class="col-xl-12 col-md-12 col-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Customers Chart</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Chart Section -->
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('./common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        var chartData = JSON.parse('<%- JSON.stringify(chartData) %>');
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                series: [{
+                    name: 'Customers',
+                    data: chartData 
+                }],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    
+                },
+                colors: ['#f9a553'],
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        dataLabels: {
+                            position: 'top', 
+                        },
+                    }
+                },
+
+                xaxis: {
+                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    position: 'bottom',
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    crosshairs: {
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                colorFrom: '#ffb84d',
+                                colorTo: '#ffb84d',
+                                stops: [0, 100],
+                                opacityFrom: 0.4,
+                                opacityTo: 0.5,
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                    }
+                },
+                yaxis: {
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                    labels: {
+                        show: false,
+                        formatter: function(val) {
+                            return val;
+                        }
+                    }
+    
+                },
+                title: {
+                    text: '',
+                    floating: true,
+                    offsetY: 330,
+                    align: 'center',
+                    style: {
+                        color: '#444'
+                    }
+                }
+            };
+    
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+    
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

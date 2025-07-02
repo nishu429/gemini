@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%- include('../common/header.ejs'); %>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Add v1 -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/addpackage12" method="POST" enctype="multipart/form-data" id="packageForm">
+                                    <div class="mb-1">
+                                        <label for="images" class="form-label">Images</label>
+                                        
+                                        <!-- Container for image previews -->
+                                        <div id="imagePreviews" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                          <!-- Image previews will be dynamically added here -->
+                                        </div>
+                                      
+                                        <!-- File input field allowing multiple images -->
+                                        <input
+                                          type="file"
+                                          class="form-control"
+                                          id="image"
+                                          name="image"
+                                          aria-describedby="images"
+                                          tabindex="5"
+                                          accept="image/*"
+                                          multiple
+                                          onchange="previewImages(event)"
+                                        />
+                                        
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="user_id" class="form-label">Receipt Name</label>
+                                        <select class="form-control" name="user_id" id="user_id" >
+                                           
+                                            <% if (customerlist.length > 0) { %>
+                                                <% customerlist.forEach(function(customer) { %>
+                                                    <option value="<%= customer.id %>"><%= customer.name %></option>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <option value="">No customers available</option>
+                                            <% } %>
+                                        </select>
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    
+                                    <div class="mb-1">
+                                        <label for="tracking_number" class="form-label">Tracking Number</label>
+                                        <input type="text" class="form-control" id="tracking_number" name="tracking_number" value="" aria-describedby="tracking_number" tabindex="2"  />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="carrier_id" class="form-label">Carrier</label>
+                                        <select class="form-control" name="carrier_id" id="carrier_id" >
+                                          
+                                            <% if (carrier.length > 0) { %>
+                                                <% carrier.forEach(function(customer) { %>
+                                                    <option value="<%= customer.id %>"><%= customer.name %></option>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <option value="">No customers available</option>
+                                            <% } %>
+                                        </select>
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    
+                                    <div class="mb-1">
+                                        <label for="sender" class="form-label">Sender</label>
+                                        <input type="text" class="form-control" id="sender" name="sender" value="" aria-describedby="sender" tabindex="3"  />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="Weight" class="form-label">Weight</label>
+                                        <input type="text" class="form-control" id="Weight" name="weight" value="" aria-describedby="Weight" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="self_location" class="form-label">Shelf Location</label>
+                                        <input type="text" class="form-control" id="self_location" name="self_location" value="" aria-describedby="self_location" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="message" class="form-label">Message</label>
+                                        <input type="text" class="form-control" id="message" name="message" value="" aria-describedby="message" tabindex="3"  />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Add</button>
+                                        <a href="/packagelist" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Add v1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            // Image preview function
+            function previewImages(event) {
+                const files = event.target.files;
+                const previewsContainer = $('#imagePreviews');
+                previewsContainer.html(''); // Clear existing previews
+
+                Array.from(files).forEach(file => {
+                    const fileType = file.type.split('/')[0];
+                    if (fileType !== 'image') {
+                        const errorMsg = $('<p>')
+                            .text(`Unsupported file type: ${file.name}`)
+                            .css({ color: 'red', fontSize: '0.9em' });
+                        previewsContainer.append(errorMsg);
+                    } else {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const imgElement = $('<img>')
+                                .attr('src', e.target.result)
+                                .attr('alt', 'Selected Image')
+                                .css({
+                                    maxWidth: '100px',
+                                    marginRight: '10px',
+                                    marginBottom: '10px',
+                                });
+                            previewsContainer.append(imgElement);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            $('#image').on('change', previewImages);
+
+            // Form validation on submit
+            $('form').on('submit', function(event) {
+                const trackingNumberInput = $('#tracking_number');
+                const senderInput = $('#sender');
+                const weightInput = $('#Weight');
+                const locationInput = $('#self_location');
+                const messageInput = $('#message');
+                const imageInput = $('#image');
+    
+                let valid = true;
+    
+                // Utility function to validate fields
+                function validateField(input, condition) {
+                    if (condition) {
+                        input.removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        input.removeClass('is-valid').addClass('is-invalid');
+                        valid = false;
+                    }
+                }
+    
+                // Validate all fields
+                validateField(trackingNumberInput, trackingNumberInput.val().trim() !== '');
+                validateField(senderInput, senderInput.val().trim() !== '');
+                validateField(weightInput, weightInput.val().trim() !== '');
+                validateField(locationInput, locationInput.val().trim() !== '');
+                validateField(messageInput, messageInput.val().trim() !== '');
+    
+                // Validate image field (at least one image selected)
+                validateField(imageInput, imageInput[0].files.length > 0);
+    
+                if (!valid) {
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+      <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+</body>
+</html>

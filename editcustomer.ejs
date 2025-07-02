@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+    <head>
+        <!-- BEGIN: Head-->
+        <%- include('../common/header.ejs'); %>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <!-- END: Head-->
+    </head>
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%- include('../common/navbar.ejs'); %>
+    <!-- END: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <%- include('../common/sidebar.ejs'); %>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper ">
+                    <div class="auth-inner py-2">
+                        <!-- Edit v1 -->
+                        <div class="card mb-0">
+                            <div class="card-body ">
+                                <form class="auth-register-form" action="/customerupdate/<%= view.id %>" method="POST" enctype="multipart/form-data">
+                                    
+
+                                    <div class="col-md-4 d-flex flex-column align-items-center mb-2">
+                                        <div class="image-container position-relative" style="width: 330px; height: 280px;">
+                                            <!-- Profile Image -->
+                                            <img class="border" id="profileImage" src="<%= view.image %>" alt="Customer Image" 
+                                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                                            <!-- Pencil icon overlay -->
+                                            <div class="icon-overlay position-absolute d-flex align-items-center justify-content-center" 
+                                                 style="bottom: 10px; right: 10px; cursor: pointer;" 
+                                                 onclick="document.getElementById('image').click();">
+                                                <i class="fas fa-pencil-alt" style="font-size: 24px; color: rgb(241, 240, 245); 
+                                                   background: rgba(6, 6, 6, 0.5); padding: 8px; border-radius: 50%;"></i>
+                                            </div>
+                                            <div class="invalid-feedback">This field is required</div>
+                                            <!-- Hidden File Input -->
+                                            <input type="file" id="image" name="image" accept="image/*" 
+                                                   style="display: none;" onchange="previewImage(event)">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" value="<%= view.name%>" aria-describedby="name" tabindex="1" autofocus />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="<%= view.email %>" aria-describedby="email" tabindex="2" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" value="<%= view.address %>" aria-describedby="address" tabindex="3" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <div class="row g-2">
+                                            <!-- Country Code Dropdown -->
+                                            <div class="col-2">
+                                                <select class="form-select" id="country_code" name="country_code" tabindex="3">
+                                                    <option value="+1" <%= view.country_code === '+1' ? 'selected' : '' %>>+1 (USA)</option>
+                                                    <option value="+44" <%= view.country_code === '+44' ? 'selected' : '' %>>+44 (UK)</option>
+                                                    <option value="+91" <%= view.country_code === '+91' ? 'selected' : '' %>>+91 (India)</option>
+                                                    <option value="+61" <%= view.country_code === '+61' ? 'selected' : '' %>>+61 (Australia)</option>
+                                                    <option value="+81" <%= view.country_code === '+81' ? 'selected' : '' %>>+81 (Japan)</option>
+                                                </select>
+                                            </div>
+                                    
+                                            <!-- Phone Number Input -->
+                                            <div class="col-10">
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="phone_number" 
+                                                    name="phone_number" 
+                                                    value="<%= view.phone_number %>" 
+                                                    aria-describedby="Phone" 
+                                                    tabindex="4" 
+                                                    placeholder="Enter phone number" 
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">This field is required</div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-warning" tabindex="5" style="margin-right: 7px;">Update</button>
+                                        <a href="/customerlist" class="btn btn-warning" tabindex="6" style="margin-left: 0;">Back</a>
+                                    </div>
+                                    
+                                    
+                                    <div class="invalid-feedback">This field is required</div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Edit v1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            // Form validation on submit
+            $('form').on('submit', function(event) {
+                var nameInput = $('#name');
+                var emailInput = $('#email');
+                var addressInput = $('#address');
+                var phoneInput = $('#phone_number');
+
+                var valid = true;
+
+                // Check name
+                if (nameInput.val().trim() === '') {
+                    nameInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    nameInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check email
+                if (emailInput.val().trim() === '' || !validateEmail(emailInput.val())) {
+                    emailInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    emailInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check address
+                if (addressInput.val().trim() === '') {
+                    addressInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    addressInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // Check phone number
+                if (phoneInput.val().trim() === '' || !validatePhoneNumber(phoneInput.val())) {
+                    phoneInput.removeClass('is-valid').addClass('is-invalid');
+                    valid = false;
+                } else {
+                    phoneInput.removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!valid) {
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+
+            // Helper function to validate email
+            function validateEmail(email) {
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Helper function to validate phone number
+            function validatePhoneNumber(phone) {
+                var phoneRegex = /^[0-9]{10}$/;
+                return phoneRegex.test(phone);
+            }
+        });
+    </script>
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script><script>
+    function previewImage(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const imgElement = document.getElementById('profileImage');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imgElement.src = e.target.result; // Update the image source
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+</body>
+<!-- END: Body-->
+</html>

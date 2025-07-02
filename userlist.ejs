@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+
+    <%- include('../common/header.ejs'); %>
+    <style>
+      .card-datatable {
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <body
+    class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+    data-open="click"
+    data-menu="vertical-menu-modern"
+    data-col=""
+  >
+    <%- include('../common/navbar.ejs'); %> <%-
+    include('../common/sidebar.ejs'); %>
+
+    <div class="app-content content">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row"></div>
+        <div class="content-body">
+          <!-- users list start -->
+          <section class="app-user-list">
+            <div class="card">
+              <div class="card-header d-flex justify-content-end">
+                <div>
+                  <a href="/addcustomer" class="btn btn-warning">Add</a>
+                </div>
+              </div>
+              <div class="card-datatable table-responsive pt-0">
+                <table id="myTable" class="user-list-table table">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Sr.no</th>
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th>Email</th>
+                      <th>Phone.no</th>
+                      <th>Address</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% data.forEach((item, i) => { %>
+                    <tr data-id="<%= item.id %>">
+                      <td><%= i + 1 %></td>
+                      <td><%= item.name %></td>
+                      <td>
+                        <% if (Array.isArray(item.img) && item.img.length > 0) {
+                        %>
+                        <img
+                          src="../<%= item.img[0].image %>"
+                          alt="full-size image"
+                          style="
+                            width: 50px;
+                            height: 50px;
+                            object-fit: cover;
+                            border-radius: 10px;
+                          "
+                        />
+                        <% } else { %>
+                        <img
+                          src="../<%= item.image %>"
+                          alt="full-size image"
+                          style="
+                            width: 50px;
+                            height: 50px;
+                            object-fit: cover;
+                            border-radius: 10px;
+                          "
+                        />
+                        <% } %> <% if (Array.isArray(item.img) &&
+                        item.img.length > 1) { %>
+                        <div
+                          id="slider"
+                          style="
+                            display: flex;
+                            width: 100%;
+                            overflow-x: auto;
+                            position: absolute;
+                            bottom: 2px;
+                            left: 0;
+                            height: 70px;
+                            padding: 5px;
+                            border-radius: 5px;
+                          "
+                        >
+                          <% item.img.slice(1).forEach(function(image) { %>
+                          <img
+                            src="../<%= image.image %>"
+                            alt="additional image"
+                            width="50"
+                            height="50"
+                            style="
+                              flex-shrink: 0;
+                              margin-right: 5px;
+                              border-radius: 5px;
+                            "
+                          />
+                          <% }); %>
+                        </div>
+                        <% } %>
+                      </td>
+                      <td><%= item.email %></td>
+
+                      <td><%= item.country_code %>-<%= item.phone_number %></td>
+
+                      <td><%= item.address %></td>
+                      <td>
+                        <% if (item.status == 0) { %>
+                        <button
+                          data-id="<%= item.id %>"
+                          data-status="0"
+                          class="btn btn-info status-toggle"
+                        >
+                          Inactive
+                        </button>
+                        <% } else { %>
+                        <button
+                          data-id="<%= item.id %>"
+                          data-status="1"
+                          class="btn btn-warning status-toggle"
+                        >
+                          Active
+                        </button>
+                        <% } %>
+                      </td>
+
+                      <td>
+                        <a
+                          href="/editcustomer/<%= item.id %>"
+                          class="btn btn-warning data-bs-toggle="
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          <i class="me-80" data-feather="edit"></i>
+                        </a>
+                        <a
+                          href="/view/<%= item.id %>"
+                          class="btn btn-warning"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="View "
+                          ><i class="me-80" data-feather="eye"></i
+                        ></a>
+                        <a
+                          href="#"
+                          onclick="deleteUser('<%= item.id %>', event)"
+                          class="btn btn-danger"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete "
+                          ><i class="me-80" data-feather="trash"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%- include('../common/footer.ejs'); %>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Your updated script here -->
+    <script>
+      $(window).on("load", function () {
+        if (feather) {
+          feather.replace({
+            width: 14,
+            height: 14,
+          });
+        }
+        // Initialize Bootstrap tooltips
+        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        //     return new bootstrap.Tooltip(tooltipTriggerEl);
+        // });
+      });
+
+      $(document).ready(function () {
+        $("#myTable").DataTable();
+
+        // Event delegation for status toggle button
+        $(document).on("click", ".status-toggle", function () {
+          let button = $(this);
+          let userId = button.attr("data-id");
+          let currentStatus = button.attr("data-status");
+          let newStatus = currentStatus === "1" ? "0" : "1";
+
+          $.ajax({
+            method: "POST",
+            url: "/status",
+            data: {
+              id: userId,
+              status: newStatus,
+            },
+            success: function (response) {
+              if (response.success) {
+                if (newStatus === "1") {
+                  button
+                    .text("Active")
+                    .removeClass("btn-info")
+                    .addClass("btn-warning");
+                } else {
+                  button
+                    .text("Inactive")
+                    .removeClass("btn-warning")
+                    .addClass("btn-info");
+                }
+                button.attr("data-status", newStatus);
+                toastr.success("Status updated successfully.");
+              } else {
+                toastr.error("Status change failed.");
+              }
+            },
+            error: function () {
+              toastr.error("An error occurred while changing the status.");
+            },
+          });
+        });
+      });
+
+      function deleteUser(user_id, event) {
+        event.preventDefault(); // Prevent the default action of the link
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "btn btn-warning",
+            cancelButton: "btn btn-danger",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                type: "POST",
+                url: `/delete/${user_id}`,
+                data: {
+                  id: user_id,
+                },
+                success: function (response) {
+                  if (response.success) {
+                    swalWithBootstrapButtons
+                      .fire("Deleted!", "Customer has been deleted.", "success")
+                      .then(() => {
+                        location.reload(); // Reload the page after deletion
+                      });
+                  } else {
+                    swalWithBootstrapButtons.fire(
+                      "Failed!",
+                      "Your file could not be deleted.",
+                      "error"
+                    );
+                  }
+                },
+                error: function () {
+                  swalWithBootstrapButtons.fire(
+                    "Error!",
+                    "An error occurred while deleting the Customer.",
+                    "error"
+                  );
+                },
+              });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                "Cancelled",
+                "Customer is safe :)",
+                "error"
+              );
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
